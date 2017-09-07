@@ -4,6 +4,7 @@ import replace from 'rollup-plugin-replace'
 import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
 import aliases from './alias.js'
+import packagejson from '../package.json'
 
 const resolve = p => {
   const base = p.split('/')[0]
@@ -29,8 +30,8 @@ function genConfig(opts) {
   const config = {
     input: resolve('src/js/index.js'),
     output: {
-      name: 'components',
-      file: 'dist/js/components.js',
+      name: packagejson.name,
+      file: `dist/js/${packagejson.name}.js`,
       format: 'umd',
     },
     plugins: [
