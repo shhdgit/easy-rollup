@@ -3,6 +3,7 @@ import node from 'rollup-plugin-node-resolve'
 import replace from 'rollup-plugin-replace'
 import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
+import alias from 'rollup-plugin-alias'
 import aliases from './alias.js'
 import packagejson from '../package.json'
 
@@ -42,6 +43,7 @@ function genConfig(opts) {
       replace({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       }),
+      alias(Object.assign({}, aliases, opts.alias)),
     ].concat(opts.plugins || []),
   }
 
