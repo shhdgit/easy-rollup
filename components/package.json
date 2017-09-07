@@ -15,7 +15,9 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-latest": "^6.24.1",
     "clean-css-cli": "^4.1.9",
+    "cross-env": "^5.0.5",
     "live-server": "^1.2.0",
+    "mkdirp": "^0.5.1",
     "npm-run-all": "^4.1.1",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.0",
@@ -26,14 +28,14 @@
     "stylus": "^0.54.5"
   },
   "scripts": {
-    "precss": "mkdir -p dist/css",
+    "precss": "mkdirp dist/css",
     "css": "npm-run-all css:compile css:minify",
     "css:compile": "stylus src/stylus/index.styl -o dist/css/components.css --sourcemap-inline",
     "css:minify": "cleancss --level 1 --output dist/css/components.min.css dist/css/components.css",
-    "js": "NODE_ENV=production rollup -c build/config.js --environment TARGET:build",
+    "js": "cross-env NODE_ENV=production rollup -c build/config.js --environment TARGET:build",
     "watch": "npm-run-all --parallel css:watch js:watch",
     "css:watch": "stylus src/stylus/index.styl -o dist/css/components.css --sourcemap-inline -w",
-    "js:watch": "NODE_ENV=development rollup -w -c build/config.js --environment TARGET:dev",
+    "js:watch": "cross-env NODE_ENV=development rollup -w -c build/config.js --environment TARGET:dev",
     "server": "live-server --open=examples --watch=dist,examples",
     "dev": "npm-run-all --parallel server watch",
     "build": "npm-run-all --parallel css js"
